@@ -47,3 +47,11 @@ exports.update = async (uid, name, birthDate, photo) => {
     throw error;
   }
 };
+
+exports.delete = async (uid) => {
+  try {
+    return (await User.destroy({ where: { uid }, limit: 1 })) === 1;
+  } catch (error) {
+    throw error;
+  }
+};

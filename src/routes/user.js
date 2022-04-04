@@ -38,4 +38,17 @@ routes.put("/", async (req, res) => {
   }
 });
 
+routes.delete("/:uid", async (req, res) => {
+  try {
+    const uid = req.params.uid;
+    if (!uid) {
+      return res.status(400).end();
+    }
+    return res.json(await userController.delete(uid));
+  } catch (error) {
+    console.log(error);
+    res.status(400).end();
+  }
+});
+
 module.exports = routes;
