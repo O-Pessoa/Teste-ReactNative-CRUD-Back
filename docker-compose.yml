@@ -1,0 +1,36 @@
+version: "3"
+
+networks:
+  app-network:
+    driver: bridge
+
+services:
+  db:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=teste
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=root
+    ports: 
+      - "3306:3306"
+    networks:
+      - app-network 
+  app:
+    depends_on:
+     - db 
+    build: .
+    environment:
+      - HOST_DB=db
+      - USER_DB=admin
+      - PASS_DB=root
+      - DB=teste
+    ports:
+      - "4000:4000"
+    command: npm start
+    volumes: 
+      - .:/usr/app
+    links: 
+      - db:db
+    networks: 
+     - app-network
