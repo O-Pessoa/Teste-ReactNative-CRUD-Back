@@ -32,3 +32,18 @@ exports.add = async (name, birthDate, photo) => {
     throw error;
   }
 };
+
+exports.update = async (uid, name, birthDate, photo) => {
+  try {
+    return (
+      (
+        await User.update(
+          { name, birthDate, photo },
+          { where: { uid }, limit: 1 }
+        )
+      )[0] === 1
+    );
+  } catch (error) {
+    throw error;
+  }
+};

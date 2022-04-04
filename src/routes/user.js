@@ -25,4 +25,17 @@ routes.post("/", async (req, res) => {
   }
 });
 
+routes.put("/", async (req, res) => {
+  try {
+    const { uid, name, birthDate, photo } = req.body;
+    if (!uid) {
+      return res.status(400).end();
+    }
+    return res.json(await userController.update(uid, name, birthDate, photo));
+  } catch (error) {
+    console.log(error);
+    res.status(400).end();
+  }
+});
+
 module.exports = routes;
